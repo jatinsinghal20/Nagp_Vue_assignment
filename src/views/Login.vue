@@ -9,16 +9,11 @@
     <div class="row">
       <div class="col-12">
         <b-form @submit.stop.prevent>
-            <div v-if="validation">
-            <div
-              style="color:red;"> Email Or Password is incorrect</div>
+          <div v-if="validation">
+            <div style="color:red;">Email Or Password is incorrect</div>
           </div>
           <label for="email">Email</label>
-          <b-input
-            :class="[validation?'borderError':'']"
-            v-model="email"
-            id="email"
-          ></b-input>
+          <b-input :class="[validation?'borderError':'']" v-model="email" id="email"></b-input>
           <label for="text-password">Password</label>
           <b-input
             :class="[validation?'borderError':'']"
@@ -26,13 +21,10 @@
             type="password"
             id="text-password"
             aria-describedby="password-help-block"
-          ></b-input>          
-          <b-form-text id="password-help-block">
-            Your password must be 8-20 characters long, contain letters and numbers, and must not
-            contain spaces, special characters, or emoji.
-          </b-form-text>
-          
-          
+          ></b-input>
+          <b-form-text
+            id="password-help-block"
+          >Your password must be 8 characters long, contain letters and numbers.</b-form-text>
         </b-form>
       </div>
     </div>
@@ -62,7 +54,7 @@ export default class Login extends Vue {
       .then(() => this.$router.push({ name: "home" }))
       .catch(err => {
         if (users.errors) {
-            this.validation =true;
+          this.validation = true;
         }
       });
   }

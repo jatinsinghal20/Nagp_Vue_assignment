@@ -44,7 +44,10 @@
           id="tags"
           placeholder="Enter Tags"
         />
-      </div>
+          <b-form-text id="password-help-block">
+            Enter space seperated tags
+          </b-form-text>
+      </div>     
     </form>
     <button class="btn btn-primary" @click="postArticle">Share My Article</button>
   </div>
