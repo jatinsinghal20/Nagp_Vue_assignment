@@ -22,6 +22,10 @@
       <p>{{article.description}}</p>
       <span>Read more...</span>
     </router-link>
+    <div style="float:right" class="tag-list">
+              <a alt="navigate through popular tags" class="tag-pill tag-default" style="float:right" v-for="(tag, index) in article.tagList" :key="index" v-text="tag"></a>
+            
+    </div>
   </div>
 </template>
 
@@ -125,6 +129,22 @@ export default class ArticlePreview extends Vue {
   font-weight: 300;
   color: #bbb;
   vertical-align: middle;
+}
+.tag-default {
+  color: #fff !important;
+  font-size: 0.8rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  white-space: nowrap;
+  margin-right: 3px;
+  margin-bottom: 0.2rem;
+  display: inline-block;
+  background-color: #818a91;
+}
+.tag-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
 }
 </style>
 

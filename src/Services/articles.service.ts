@@ -64,7 +64,7 @@ export default class ArticlesService {
 
     static async editArticle(article: Article) : Promise<Article | undefined> {
         try {
-            const response = await put(`/articles/${article.slug}`, article);
+            const response = await put(`/articles/${article.slug}`,{article: article});
             return (response.data.article);
         }
         catch{
@@ -74,8 +74,8 @@ export default class ArticlesService {
 
     static async addNewArticle(article: any) : Promise<Article | undefined>  {
         try {
-            debugger
-            const response = await post("/articles", article);
+            debugger;
+            const response = await post("/articles", {article:article});
             return (response.data.article);
         }
         catch{
