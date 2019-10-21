@@ -23,26 +23,25 @@ export async function get(resource: string, slug = "") {
 
 export async function query(resource: string, params : any) {
     return conduitAPI.get(`${resource}`, params).catch(error => {
-        throw new Error(`ApiService ${error}`);
+        throw new Error(`${error}`);
       });
 }
 
 export async function post(resource: string, params : any) {
-    return conduitAPI.post(`${resource}`, params).catch(error => {
-        throw new Error(` ApiService ${error}`);
+    return conduitAPI.post(`${resource}`, params).catch(err => {
+        throw err.response.data;
       });
 }
 
 export async function put(resource: string, params : any) {
-    console.log(params);
     return conduitAPI.put(`${resource}`, params).catch(error => {
-        throw new Error(`ApiService ${error}`);
+        throw new Error(`${error}`);
       });
 }
 
 
 export async function deleteApi(resource: string) {
     return conduitAPI.delete(`${resource}`).catch(error => {
-        throw new Error(` ApiService ${error}`);
+        throw new Error(` ${error}`);
       });
 }

@@ -9,7 +9,7 @@ export default class ArticlesService {
             const response = await get(`/tags`);
             return (response.data.tags);
         }
-        catch{
+        catch(err){
             console.log("failed to fetch");
         }
     }
@@ -18,7 +18,7 @@ export default class ArticlesService {
             const response = await deleteApi(`articles/${slug}/favorite`);
             return (response.data.article);
         }
-        catch{
+        catch(err){
             console.log("failed to fetch");
         }
     }
@@ -74,6 +74,7 @@ export default class ArticlesService {
 
     static async addNewArticle(article: any) : Promise<Article | undefined>  {
         try {
+            debugger
             const response = await post("/articles", article);
             return (response.data.article);
         }

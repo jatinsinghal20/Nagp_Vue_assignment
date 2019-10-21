@@ -17,7 +17,7 @@
             <router-link
               active-class="active"
               :to="{ name: 'article-edit' }"
-              class="nav-link"
+              class="nav-link" id="newArticle"
             >New Article</router-link>
           </b-nav-item>
           <b-nav-item>

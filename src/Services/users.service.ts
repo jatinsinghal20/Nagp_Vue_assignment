@@ -8,8 +8,8 @@ export async function userLogin(user: UserAuth): Promise<User | undefined> {
         const response = await post("/users/login", { user });
         return (response.data as UserResponse).user
     }
-    catch{
-        console.log("failed");
+    catch(err){
+        throw err
     }
 }
 
@@ -19,8 +19,8 @@ export async function userRegister(user: any): Promise<User | undefined> {
         return (response.data as UserResponse).user
     }
     catch(err){
-        console.log(err);
-        throw new Error(`${err}`);
+        throw err;
+        
     }
 }
 

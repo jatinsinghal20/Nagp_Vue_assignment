@@ -1,4 +1,4 @@
-import { VuexModule, Module, getModule, MutationAction, Mutation } from "vuex-module-decorators";
+import { VuexModule, Module, getModule, MutationAction, Mutation, Action } from "vuex-module-decorators";
 import store from "@/store";
 import UserProfile from "@/Common/Models/UserProfile"
 import User from "@/Common/Models/User"
@@ -16,6 +16,7 @@ import { userLogin, getUser, userRegister } from '@/Services/users.service';
 class UsersModule extends VuexModule {
     user: User | null = null;
     profile: UserProfile | null = null;
+    errors: any = null;
 
     get username() {
         return this.user ? this.user.username : null
@@ -26,29 +27,56 @@ class UsersModule extends VuexModule {
     }
 
     //authenticte user
-    @MutationAction({ mutate: ['user'] })
+    @Action
     async login(userRequest: UserAuth) {
-        const user = await userLogin(userRequest);
-        if (user) {
-            JwtService.saveToken(user.token);
-            setJWT(user.token);
+        try {
+            const user = await userLogin(userRequest);        
+            if (user) {
+                JwtService.saveToken(user.token);
+                setJWT(user.token);
+                this.context.commit("setUser", user);
+            }
+        } catch (err) {
+            this.context.commit("setErrors", err.errors);
+            throw err;
         }
-        return { user }
     }
 
+
     //register new user
-    @MutationAction({ mutate: ['user'] })
+    @Action
     async register(userRequest: any) {
         try {
             const user = await userRegister(userRequest);
             if (user) {
                 JwtService.saveToken(user.token);
                 setJWT(user.token);
+                this.context.commit("setUser", user);
             }
-            return { user }
         } catch (err) {
-            throw new Error(`${err}`);
+            this.context.commit("setErrors", err.errors);
+            throw err;
         }
+    }
+
+    @Mutation
+    setUser(payload: User) {
+        if (payload) {
+            this.user = payload
+        }
+    }
+
+    @Mutation
+    setErrors(payload: any) {
+        console.log(payload);
+        if (payload) {
+            this.errors = payload;
+        }
+    }
+
+    @Mutation
+    resetErrors() {
+        this.errors = null;
     }
 
     //check whether user is loggedin or not and get user if token is present.
