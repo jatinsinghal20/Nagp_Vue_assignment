@@ -23,7 +23,7 @@
       <span>Read more...</span>
     </router-link>
     <div style="float:right" class="tag-list">
-              <a alt="navigate through popular tags" class="tag-pill tag-default" style="float:right" v-for="(tag, index) in article.tagList" :key="index" v-text="tag"></a>
+              <a @click="fetchTags" class="tag-pill tag-default" style="float:right" v-for="(tag, index) in article.tagList" :key="index" v-text="tag"></a>
             
     </div>
   </div>
@@ -40,6 +40,12 @@ export default class ArticlePreview extends Vue {
   @Prop() private article!: Article;
   get isLoggedIn() {
     return UsersModule.isLoggedIn;
+  }
+
+  fetchTags(event : any){
+    if(event.target.innerText){
+      this.$emit('fetchTag',event.target.innerText)
+    }
   }
 
   //Mark article as favourite/unfavourite

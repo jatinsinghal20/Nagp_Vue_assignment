@@ -20,7 +20,7 @@
         </div>
         <div v-if="articlesList" class="container">
           <div v-for="article of articlesList" :key="article.slug">
-            <ArticlePreview :article="article" />
+            <ArticlePreview :article="article" @fetchTag="fetchTagFromPreview" />
           </div>
           <div v-if="rows" class="overflow-auto">
             <b-pagination
@@ -122,6 +122,16 @@ export default class Home extends Vue {
     if (event && event.target) {
       ArticlesModule.resetArticles();
       this.selectedTag = event.target.innerText.trim();
+      this.isTagged = true;
+      this.getArticles(1);
+    }
+  }
+
+  //fetch the articles related to particular tag
+  fetchTagFromPreview(event: any) {    
+    if (event) {
+      ArticlesModule.resetArticles();
+      this.selectedTag = event;
       this.isTagged = true;
       this.getArticles(1);
     }
