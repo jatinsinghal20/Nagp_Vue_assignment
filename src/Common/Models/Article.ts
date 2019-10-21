@@ -1,4 +1,4 @@
-import Profile from "./Profile";
+import UserProfile from "./UserProfile";
 
 export default interface Article {
     title: string;
@@ -8,7 +8,7 @@ export default interface Article {
     updatedAt: string;
     tagList?: (string | null)[] | null;
     description: string;
-    author: Profile;
+    author: UserProfile;
     favorited: boolean;
     favoritesCount: number;
 }

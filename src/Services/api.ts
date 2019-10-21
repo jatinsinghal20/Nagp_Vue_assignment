@@ -11,18 +11,8 @@ export function setJWT(jwt: string) {
     conduitAPI.defaults.headers.common["Authorization"] = `Token ${jwt}`;
 }
 
-export function clearJWT(jwt: string) {
+export function clearJWT() {
     delete conduitAPI.defaults.headers.common["Authorization"];
-}
-
-export async function userLogin(user: UserAuth): Promise<User | undefined> {
-    try {
-        const response = await conduitAPI.post("/users/login", { user });
-        return (response.data as UserResponse).user
-    }
-    catch{
-        console.log("failed");
-    }
 }
 
 export async function get(resource: string, slug = "") {
@@ -33,6 +23,26 @@ export async function get(resource: string, slug = "") {
 
 export async function query(resource: string, params : any) {
     return conduitAPI.get(`${resource}`, params).catch(error => {
-        throw new Error(`[RWV] ApiService ${error}`);
+        throw new Error(`ApiService ${error}`);
+      });
+}
+
+export async function post(resource: string, params : any) {
+    return conduitAPI.post(`${resource}`, params).catch(error => {
+        throw new Error(` ApiService ${error}`);
+      });
+}
+
+export async function put(resource: string, params : any) {
+    console.log(params);
+    return conduitAPI.put(`${resource}`, params).catch(error => {
+        throw new Error(`ApiService ${error}`);
+      });
+}
+
+
+export async function deleteApi(resource: string) {
+    return conduitAPI.delete(`${resource}`).catch(error => {
+        throw new Error(` ApiService ${error}`);
       });
 }

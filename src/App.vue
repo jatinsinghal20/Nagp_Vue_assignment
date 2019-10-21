@@ -11,8 +11,8 @@
 <script>
 import { Component, Vue } from "vue-property-decorator";
 import AppFooter from "@/components/AppFooter.vue";
-import HelloWorld from "@/components/HelloWorld.vue";
 import AppNavbar from "@/components/AppNavbar.vue";
+import users from './store/Modules/users';
 
 @Component({
   components : {
@@ -20,5 +20,10 @@ import AppNavbar from "@/components/AppNavbar.vue";
     AppNavbar,
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+
+  //check if user is logged in or not on page reload.
+  beforeCreate() { Promise.all([users.checkAuth()]);}
+ 
+}
 </script>

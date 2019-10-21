@@ -1,23 +1,64 @@
 <template>
-  <div style="margin-top:30%">
-    <b-form @submit.stop.prevent>
-      <label for="text-username">Name</label>
-      <b-input type="text" id="text-username"></b-input>
-      <label for="feedback-user">User ID</label>
-      <b-input v-model="userId" :state="validation" id="feedback-user"></b-input>
-      <b-form-invalid-feedback :state="validation">Your user ID must be 5-12 characters long.</b-form-invalid-feedback>
-      <b-form-valid-feedback :state="validation">Looks Good.</b-form-valid-feedback>
-      <label for="text-password">Password</label>
-      <b-input type="password" id="text-password" aria-describedby="password-help-block"></b-input>
-      <b-form-text id="password-help-block">
-        Your password must be 8-20 characters long, contain letters and numbers, and must not
-        contain spaces, special characters, or emoji.
-      </b-form-text>
-    </b-form>
-    <button type="button" class="btn btn-success">Success</button>
+  <div class="container" style="margin-top:15%; margin-bottom:15%">
+    <div class="row">
+      <div class="col-6 offset-3 text-center">
+        <h2 style="color:green">Welcome to Blogging</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <b-form @submit.stop.prevent>
+          <label for="email">Username</label>
+          <b-input v-model="username" id="username"></b-input>
+          <label for="email">Email</label>
+          <b-input v-model="email" id="email"></b-input>
+
+          <label for="text-password">Password</label>
+          <b-input
+            v-model="password"
+            type="password"
+            id="text-password"
+            aria-describedby="password-help-block"
+          ></b-input>
+          <b-form-text id="password-help-block">
+            Your password must be 8-20 characters long, contain letters and numbers, and must not
+            contain spaces, special characters, or emoji.
+          </b-form-text>
+        </b-form>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-6 offset-3 text-center">
+        <button @click="register" type="button" class="btn btn-success">Login</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { Component, Vue } from "vue-property-decorator";
+import users from "@/store/Modules/users";
+
+@Component
+export default class register extends Vue {
+  email = "";
+  password = "";
+  username = "";
+
+  //Register new user.
+  register() {
+    users
+      .register({
+        email: this.email,
+        password: this.password,
+        username: this.username
+      })
+      .then(() => this.$router.push({ name: "home" }))
+      .catch(err => console.log(err));
+  }
+}
 </script>
+
+<style>
+</style>

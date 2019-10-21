@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import { Component } from 'vue-property-decorator'
+import authGuard from '@/Common/Guard/auth.guard'
 
 Vue.use(Router);
 Component.registerHooks([
   'beforeRouteEnter',
-  'beforeRouteUpdate',
   'beforeRouteLeave'
 ]);
 
@@ -20,14 +20,26 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/articles',
+      name: 'articles',
+      component: Home,
+    },
+    {
       path: '/register',
       name: 'register',
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Register.vue'),
+      component: () => import('@/views/Register.vue'),
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "about" */ '@/views/Login.vue'),
+      component: () => import('@/views/Login.vue'),
+    }, 
+    
+    {
+      path: '/timeline',
+      name: 'timeline',
+      beforeEnter: authGuard.authGuard, 
+      component: () => import('@/views/Timeline.vue'),
     }, 
     
     {
@@ -39,8 +51,9 @@ export default new Router({
     {
       name: "article-edit",
       path: "/editor/:slug?",
+      beforeEnter: authGuard.authGuard, 
       props: true,
-      component: () => import("@/views/ArticleEdit.vue")
+      component: () => import("@/views/ArticleEditor.vue")
     }
   ],
 });
